@@ -34,16 +34,24 @@ def main():
                 return
 
         updatable.update(dt)
+
         for ast in asteroids:
             if ast.check_collision(player):
                 print("Game over!")
                 return
+
+            for bullet in shots:
+                if ast.check_collision(bullet):
+                    bullet.kill()
+                    ast.split()
+
         screen.fill("black")
+
         for obj in drawable:
             obj.draw(screen)
         pygame.display.flip()
 
-        dt += game_clock.tick(60) / 1000
+        dt = game_clock.tick(60) / 1000
 
 
 if __name__ == "__main__":
